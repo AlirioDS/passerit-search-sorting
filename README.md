@@ -23,7 +23,7 @@ With this you calculate rate using localbitcoins public API to search rate from 
 ```sh
 $ cd passerit-searchAndSorting
 $ yarn install
-$ yarn build:dll
+$ yarn prebuild
 $ yarn build:dev
 ```
 
