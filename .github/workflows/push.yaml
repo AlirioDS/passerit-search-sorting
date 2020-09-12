@@ -14,5 +14,5 @@ jobs:
         with:
           node-version: 12
       - run: yarn install
-      - run: yarn build:dll
+      - run: yarn prebuild
       - run: yarn build
