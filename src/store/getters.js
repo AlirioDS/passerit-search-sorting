@@ -10,24 +10,19 @@ export const agentsFilterByAmount = (state) => {
 
 export const agentsFilter = (state) => {
   if (state.seller.isSelect && !state.buyer.isSelect) {
-    state.seller.all = state.seller.all.filter(seller => {
-      return 98 <= seller.data.profile.feedback_score || 100 > parseInt(seller.data.profile.trade_count.replace('+', '').replace(' ', ''))
-    })
-
+    state.seller.all = state.seller.all.filter( seller => seller.data.profile.feedback_score >= 98 && parseInt(seller.data.profile.trade_count.replace('+', '').replace(' ', '')) >= 100 )
+  
     if(state.filterClient.isActive) {
       clientAmount = parseInt(state.filterClient.byAmount)
-
-      return state.seller.filterByAmount = state.seller.filterByAmount = state.seller.all.filter(
+      
+      return state.seller.filterByAmount = state.seller.all.filter(
         seller => clientAmount >= parseInt(seller.data.min_amount)
       )
     } else {
       return state.seller.all
     }
-
   } else {
-    state.buyer.all = state.buyer.all.filter(seller => {
-      return 98 <= seller.data.profile.feedback_score || 100 > parseInt(seller.data.profile.trade_count.replace('+', '').replace(' ', ''))
-    })
+    state.buyer.all = state.buyer.all.filter( buyer => buyer.data.profile.feedback_score >= 98 && parseInt(buyer.data.profile.trade_count.replace('+', '').replace(' ', '')) >= 100 )
 
     if(state.filterClient.isActive && state.buyer.all.length !== 0) {
       let isCopToVes = state.seller.select[0].data.currency === 'COP' && state.buyer.all[0].data.currency === 'VES'
@@ -36,12 +31,8 @@ export const agentsFilter = (state) => {
       let sellerTempPrice = parseFloat(state.seller.select[0].data.temp_price)
 
       return isCopToVes 
-        ? state.buyer.filterByAmount = state.buyer.all.filter(buyer => {
-          return (clientAmount / (sellerTempPrice / parseFloat(buyer.data.temp_price))) >= parseFloat(buyer.data.min_amount) 
-        })
-        : state.buyer.filterByAmount = state.buyer.all.filter(buyer => {
-          return (parseFloat(buyer.data.temp_price / sellerTempPrice) * clientAmount) >= parseFloat(buyer.data.min_amount)
-        })
+        ? state.buyer.filterByAmount = state.buyer.all.filter( buyer => (clientAmount / (sellerTempPrice / parseFloat(buyer.data.temp_price))) >= parseFloat(buyer.data.min_amount) )
+        : state.buyer.filterByAmount = state.buyer.all.filter(buyer => (parseFloat(buyer.data.temp_price / sellerTempPrice) * clientAmount) >= parseFloat(buyer.data.min_amount) )
     } else {
       return state.buyer.all
     }
