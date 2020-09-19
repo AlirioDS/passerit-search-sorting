@@ -22,7 +22,8 @@
         :items='agentelectedIs() ? agentSelect.seller : agentSelect.buyer'
       )
         template(v-slot:cell(data.bank_name)="data")
-          b.text-secondary {{ agentelectedIs() ? agentSelect.seller[0].data.bank_name.replace(/[^a-zA-Z]+/g, ' ') : agentSelect.buyer[0].data.bank_name.replace(/[^a-zA-Z]+/g, ' ') }}
+          b.text-secondary(class='pr-1') {{ agentelectedIs() ? agentSelect.seller[0].data.bank_name.replace(/[^a-zA-Z]+/g, ' ') : agentSelect.buyer[0].data.bank_name.replace(/[^a-zA-Z]+/g, ' ') }}
+          b-badge(variant="warning") {{ agentelectedIs() ? agentSelect.seller[0].data.temp_price.toString().replace(/\d(?=(\d{3})+\.)/g, '$&,') : agentSelect.buyer[0].data.temp_price.toString().replace(/\d(?=(\d{3})+\.)/g, '$&,') }}
         template(v-slot:cell(data.max_amount)="data")
           b.text-secondary {{ haveData( agentelectedIs() ? agentSelect.seller[0].data.max_amount : agentSelect.buyer[0].data.max_amount, agentelectedIs() ? agentSelect.seller[0].data.currency : agentSelect.buyer[0].data.currency ) }}
         template(v-slot:cell(data.min_amount)="data")

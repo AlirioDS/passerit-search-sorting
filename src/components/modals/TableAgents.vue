@@ -45,7 +45,8 @@
                 b-spinner(style='width: 10rem; height: 10rem;', label='Large Spinner', type='grow')
             
             template(v-slot:cell(data.bank_name)="bankName")
-              b.text-secondary {{ bankName.value.replace(/[^a-zA-Z]+/g, ' ') }}
+              b.text-secondary(class="pr-1") {{ bankName.value.replace(/[^a-zA-Z]+/g, ' ') }}
+              b-badge(variant="warning") {{ bankName.item.data.temp_price.toString().replace(/\d(?=(\d{3})+\.)/g, '$&,') }}
             
             template(v-slot:cell(data.min_amount)="minAmount")
               b.text-secondary {{ minAmount.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}
