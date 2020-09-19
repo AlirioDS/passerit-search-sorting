@@ -15,10 +15,15 @@ const localBitcoinsURL = axios.create({
 export default {
   async all(currency, market) {
     let agents = []
-
-    let URLToAgents = market === "sell-bitcoins-online"
-      ? `${market}/${currency}/c/bank-transfers/.json`
-      : `${market}/${currency}/transfers-with-specific-bank/.json`
+    let URLToAgents
+    
+    if(currency === "ec") {
+      URLToAgents = `${market}/${currency}/ecuador/transfers-with-specific-bank/.json`
+    } else {
+      URLToAgents = market === "sell-bitcoins-online"
+        ? `${market}/${currency}/c/bank-transfers/.json`
+        : `${market}/${currency}/transfers-with-specific-bank/.json`
+    }
 
     const getAgents = async () => {
       await localBitcoinsURL.get(URLToAgents)
